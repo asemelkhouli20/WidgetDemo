@@ -6,135 +6,145 @@
 //
 
 import SwiftUI
-
 struct ContentView: View {
-    let date: Date = Date.now
-    @State var flashLight  = false
-    @State var qautoRandom:QautoRandom? = QautoRandom(
-        content:"Never bend your head. Always hold it high. Look the world right in the eye.",
-        author: "Helen Keller"
-    )
+    @State var flashLight = false
+    @StateObject var orientationInfo = OrientationInfo()
+
     var body: some View {
         
         ZStack{
-           
-            LinearGradient(
-                gradient:Gradient(colors:[.random(),.random()]),
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing)
-            
             VStack(spacing: 5){
                 Spacer()
-                VStack(spacing: 0){
-                    Text(String.randomEmoji())
-                        .font(.system(size: 100))
+                CalenderView(flashLight: $flashLight, isValue: self.orientationInfo.isPortrait )
+                ForEach(0..<4) { _ in Spacer()}
+            }.frame(maxWidth: .infinity)
+                .background(content: {
+                    BackgroundView(flashLight: $flashLight)
+                })
+            .onTapGesture {
+                flashLight.toggle()
+            }
+            .bold()
+            .foregroundColor(Color(uiColor: .label).opacity(0.7))
+            
+            VStack{
+                Spacer()
+                QautoView(flashLight: $flashLight)
+            }
+        }.ignoresSafeArea()
+           
+    }
+    
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+        
+    }
+}
+
+
+
+struct CalenderView: View {
+    @Binding var flashLight:Bool
+    let date: Date = Date.now
+    var isValue:Bool
+    var body: some View {
+            VStack{
+                if isValue{
+                    VStack(alignment: .center, spacing: 0){
+                        Text(String.randomEmoji())
+                            .font(.system(size: 100))
                         Text(date.weekDayFormate)
                             .minimumScaleFactor(0.6)
                         
                         Text(date.formatted(.dateTime.day())).font(.system(size: 150,weight: .heavy))
                         Rectangle().frame(width: 300, height: 1)
-                    
-                } .font(.system(size: 80))
-                    
-                Spacer()
-                VStack{
-                    if let qauto = qautoRandom {
-                        VStack(){
-                           
-                            Rectangle().foregroundColor(.clear).frame(height: 10)
-                            Text("\""+(qauto.content ?? "")+"\"")
-                                .font(.system(size: 25,weight: .regular))
-                            HStack{
-                                Spacer()
-                                Text("---")
-                                Text(qauto.author ?? "")
-                            }.padding(8).foregroundColor(.white.opacity(0.7)).bold()
-                            Rectangle().foregroundColor(.clear).frame(height: 20)
-                        }.padding()
+                        
                     }
-                }.background(.ultraThinMaterial,in:RoundedRectangle(cornerRadius: 25))
-                
-            }
-            .bold()
-            .foregroundColor(.white)
-        }.ignoresSafeArea()
-            .animation(.spring(), value: flashLight)
-            .onTapGesture {getQote()}
-            .onAppear {getQote()}
-    }
-    func getQote(){
-        let url = "https://api.quotable.io/quotes/random"
-        var request = URLRequest(url: URL(string: url)!,timeoutInterval: Double.infinity)
-        request.httpMethod = "GET"
-        
-        DispatchQueue.global(qos: .background).async {
-            let task = URLSession.shared.dataTask(with: request) { data, response, error in
-                guard let d = data else {return}
-                let dataSet:[QautoRandom]? = try? JSONDecoder().decode([QautoRandom].self, from: d)
-                if let data = dataSet {
-                    DispatchQueue.main.async {self.qautoRandom = data.first
-                        self.flashLight.toggle()
+                }else{
+                    HStack{
+                        Text(String.randomEmoji())
+                            .font(.system(size: 60))
+                        Text(date.weekDayFormate)
+                            .minimumScaleFactor(0.6)
+                        Rectangle().frame(width: 1, height: 100).padding(.horizontal)
+                        Text(date.formatted(.dateTime.day()))
+                            .font(.system(size: 150,weight: .heavy))
                     }
                 }
-            }
+                
             
-            task.resume()
+        }
+        
+        .font(.system(size: 80))
+        .onChange(of: flashLight) { _ in
+            
+        }
+        
+    }
+}
+
+
+
+
+
+struct QautoView: View {
+    @Binding var flashLight:Bool
+    @State var qautoRandom:QautoRandom = QautoRandom(
+        content:"Never bend your head. Always hold it high. Look the world right in the eye.",
+        author: "Helen Keller"
+    )
+    var body: some View {
+        VStack(){
+            Rectangle()
+                .foregroundColor(Color(uiColor: .systemBackground))
+                .frame(width: 50,height: 1).padding(8)
+            Text("\""+(qautoRandom.content ?? "")+"\"")
+                .font(.system(size: 25,weight: .regular))
+                .textSelection(.enabled)
+                
+            HStack{
+                Spacer()
+                Text("---")+Text(qautoRandom.author ?? "")
+            }
+            .padding(8).foregroundColor(.white.opacity(0.7)).bold()
+            
+            Rectangle().foregroundColor(.clear).frame(height: 20)
+        }.padding(.horizontal)
+        .padding().background{
+            Color.clear
+                .background(.ultraThinMaterial,in:RoundedRectangle(cornerRadius: 25))
+                .shadow(color: .black.opacity(0.2),radius: 5)
+            
+        }
+        .onAppear {getQote()}
+        .onChange(of: flashLight) { _ in getQote()}
+        
+    }
+    func getQote(){
+        DispatchQueue.global(qos: .background).async {
+            URLSession.shared.dataTask(with: Help.makeRequest()) { (data,_,_) in
+                if data == nil {return}
+                if let qauto =  Help.makeDecode(d: data!) {
+                    DispatchQueue.main.async {withAnimation {self.qautoRandom = qauto}}
+                }
+            }.resume()
+            
         }
         
         
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+struct BackgroundView: View {
+    @Binding var flashLight:Bool
+    var body: some View {
+        LinearGradient(
+            gradient:Gradient(colors:[.randomColor(),.randomColor()]),
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing)
+        .onChange(of: flashLight) { _ in}
     }
-}
-extension Color {
-    static public func random() -> Color {
-         Color(uiColor:UIColor(
-            red: .random(in: 0...1),
-            green: .random(in: 0...1),
-            blue: .random(in: 0...1),
-            alpha: 1.0
-        ))
-    }
-}
-extension String {
-    static public func randomEmoji() -> String {
-        let ranges: [ClosedRange<Int>] = [
-            0x1F300...0x1F3F0,
-            0x1f600...0x1f64f,
-            0x1f680...0x1f6c5,
-            0x1f6cb...0x1f6d2,
-            0x1f6e0...0x1f6e5,
-            0x1f6f3...0x1f6fa,
-            0x1f7e0...0x1f7eb,
-            0x1f90d...0x1f93a,
-            0x1f93c...0x1f945,
-            0x1f947...0x1f971,
-            0x1f973...0x1f976,
-            0x1f97a...0x1f9a2,
-            0x1f9a5...0x1f9aa,
-            0x1f9ae...0x1f9ca,
-            0x1f9cd...0x1f9ff,
-            0x1fa70...0x1fa73,
-            0x1fa78...0x1fa7a,
-            0x1fa80...0x1fa82,
-            0x1fa90...0x1fa95,
-        ]
-        let range = ranges[Int(arc4random_uniform(UInt32(ranges.count)))]
-        let index = Int(arc4random_uniform(UInt32(range.count)))
-        let ord = range.lowerBound + index
-        guard let scalar = UnicodeScalar(ord) else { return "❓" }
-        return String(scalar)
-    }
-}
-
-
-extension Date{
-    var weekDayFormate:String {self.formatted(.dateTime.weekday(.wide))}
-}
-struct QautoRandom: Codable {
-    var  content, author: String?
 }

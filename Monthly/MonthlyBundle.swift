@@ -12,6 +12,5 @@ import SwiftUI
 struct MonthlyBundle: WidgetBundle {
     var body: some Widget {
         Monthly()
-        MonthlyLiveActivity()
     }
 }
