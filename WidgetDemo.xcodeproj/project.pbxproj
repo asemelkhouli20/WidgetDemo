@@ -92,7 +92,6 @@
 		D57B66B72A45EC8400E7A964 = {
 			isa = PBXGroup;
 			children = (
-				D52A1A282A48BF9D0033DEA3 /* Help.swift */,
 				D57B66C22A45EC8400E7A964 /* WidgetDemo */,
 				D57B66F72A45ED1300E7A964 /* Monthly */,
 				D57B66F22A45ED1300E7A964 /* Frameworks */,
@@ -115,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				D57B66C32A45EC8400E7A964 /* WidgetDemoApp.swift */,
+				D52A1A282A48BF9D0033DEA3 /* Help.swift */,
 				D57B66C52A45EC8400E7A964 /* ContentView.swift */,
 				D57B66C72A45EC8500E7A964 /* Assets.xcassets */,
 				D57B66C92A45EC8500E7A964 /* Preview Content */,
