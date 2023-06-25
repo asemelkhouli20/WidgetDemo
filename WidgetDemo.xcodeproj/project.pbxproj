@@ -7,10 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D52A1A202A4884350033DEA3 /* Help.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52A1A1F2A4884350033DEA3 /* Help.swift */; };
-		D52A1A232A4884350033DEA3 /* Help.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52A1A1F2A4884350033DEA3 /* Help.swift */; };
 		D52A1A252A4892F30033DEA3 /* DeviceRotationViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52A1A242A4892F30033DEA3 /* DeviceRotationViewModifier.swift */; };
 		D52A1A272A4897A40033DEA3 /* OrientationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52A1A262A4897A40033DEA3 /* OrientationInfo.swift */; };
+		D52A1A292A48BF9D0033DEA3 /* Help.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52A1A282A48BF9D0033DEA3 /* Help.swift */; };
 		D57B66C42A45EC8400E7A964 /* WidgetDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57B66C32A45EC8400E7A964 /* WidgetDemoApp.swift */; };
 		D57B66C62A45EC8400E7A964 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57B66C52A45EC8400E7A964 /* ContentView.swift */; };
 		D57B66C82A45EC8500E7A964 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D57B66C72A45EC8500E7A964 /* Assets.xcassets */; };
@@ -52,9 +51,9 @@
 /* Begin PBXFileReference section */
 		D52A1A1D2A4884340033DEA3 /* WidgetDemoTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WidgetDemoTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		D52A1A1E2A4884340033DEA3 /* WidgetDemoUITests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WidgetDemoUITests-Bridging-Header.h"; sourceTree = "<group>"; };
-		D52A1A1F2A4884350033DEA3 /* Help.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Help.swift; sourceTree = "<group>"; };
 		D52A1A242A4892F30033DEA3 /* DeviceRotationViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceRotationViewModifier.swift; sourceTree = "<group>"; };
 		D52A1A262A4897A40033DEA3 /* OrientationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationInfo.swift; sourceTree = "<group>"; };
+		D52A1A282A48BF9D0033DEA3 /* Help.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Help.swift; sourceTree = "<group>"; };
 		D57B66C02A45EC8400E7A964 /* WidgetDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WidgetDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D57B66C32A45EC8400E7A964 /* WidgetDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetDemoApp.swift; sourceTree = "<group>"; };
 		D57B66C52A45EC8400E7A964 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -93,7 +92,7 @@
 		D57B66B72A45EC8400E7A964 = {
 			isa = PBXGroup;
 			children = (
-				D52A1A1F2A4884350033DEA3 /* Help.swift */,
+				D52A1A282A48BF9D0033DEA3 /* Help.swift */,
 				D57B66C22A45EC8400E7A964 /* WidgetDemo */,
 				D57B66F72A45ED1300E7A964 /* Monthly */,
 				D57B66F22A45ED1300E7A964 /* Frameworks */,
@@ -257,8 +256,8 @@
 			files = (
 				D57B66C62A45EC8400E7A964 /* ContentView.swift in Sources */,
 				D57B67032A45ED1500E7A964 /* Monthly.intentdefinition in Sources */,
+				D52A1A292A48BF9D0033DEA3 /* Help.swift in Sources */,
 				D52A1A272A4897A40033DEA3 /* OrientationInfo.swift in Sources */,
-				D52A1A202A4884350033DEA3 /* Help.swift in Sources */,
 				D52A1A252A4892F30033DEA3 /* DeviceRotationViewModifier.swift in Sources */,
 				D57B66C42A45EC8400E7A964 /* WidgetDemoApp.swift in Sources */,
 			);
@@ -268,7 +267,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D52A1A232A4884350033DEA3 /* Help.swift in Sources */,
 				D57B67022A45ED1500E7A964 /* Monthly.intentdefinition in Sources */,
 				D57B66FD2A45ED1300E7A964 /* Monthly.swift in Sources */,
 				D57B66F92A45ED1300E7A964 /* MonthlyBundle.swift in Sources */,
