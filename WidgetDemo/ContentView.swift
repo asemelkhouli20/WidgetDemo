@@ -56,7 +56,7 @@ struct CalenderView: View {
                     VStack(alignment: .center, spacing: 0){
                         Text(String.randomEmoji())
                             .font(.system(size: 100))
-                        Text(date.weekDayFormate)
+                        Text(date.formatted(.dateTime.weekday()))
                             .minimumScaleFactor(0.6)
                         
                         Text(date.formatted(.dateTime.day())).font(.system(size: 150,weight: .heavy))
@@ -67,7 +67,7 @@ struct CalenderView: View {
                     HStack{
                         Text(String.randomEmoji())
                             .font(.system(size: 60))
-                        Text(date.weekDayFormate)
+                        Text(date.formatted(.dateTime.weekday()))
                             .minimumScaleFactor(0.6)
                         Rectangle().frame(width: 1, height: 100).padding(.horizontal)
                         Text(date.formatted(.dateTime.day()))
@@ -101,13 +101,13 @@ struct QautoView: View {
             Rectangle()
                 .foregroundColor(Color(uiColor: .systemBackground))
                 .frame(width: 50,height: 1).padding(8)
-            Text("\""+(qautoRandom.content ?? "")+"\"")
+            Text("\""+(qautoRandom.content )+"\"")
                 .font(.system(size: 25,weight: .regular))
                 .textSelection(.enabled)
                 
             HStack{
                 Spacer()
-                Text("---")+Text(qautoRandom.author ?? "")
+                Text("---")+Text(qautoRandom.author )
             }
             .padding(8).foregroundColor(.white.opacity(0.7)).bold()
             
@@ -127,9 +127,10 @@ struct QautoView: View {
         DispatchQueue.global(qos: .background).async {
             URLSession.shared.dataTask(with: Help.makeRequest()) { (data,_,_) in
                 if data == nil {return}
-                if let qauto =  Help.makeDecode(d: data!) {
+                if let qauto =  Help.makeDecode(d: data!).first {
                     DispatchQueue.main.async {withAnimation {self.qautoRandom = qauto}}
                 }
+
             }.resume()
             
         }
@@ -142,7 +143,7 @@ struct BackgroundView: View {
     @Binding var flashLight:Bool
     var body: some View {
         LinearGradient(
-            gradient:Gradient(colors:[.randomColor(),.randomColor()]),
+            gradient:Gradient(colors:[.randomColor,.randomColor]),
             startPoint: .topLeading,
             endPoint: .bottomTrailing)
         .onChange(of: flashLight) { _ in}

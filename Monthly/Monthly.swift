@@ -48,7 +48,7 @@ struct MonthlyEntryView : View {
     var body: some View {
         ZStack{
             LinearGradient(
-                gradient:Gradient(colors:[.randomColor(),.randomColor()]),
+                gradient:Gradient(colors:[.randomColor,.randomColor]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing)
             HStack{
@@ -56,7 +56,7 @@ struct MonthlyEntryView : View {
                     HStack(spacing: 0){
                         Text(String.randomEmoji())
                             .font(.system(size: 30))
-                        Text(entry.date.weekDayFormate)
+                        Text(entry.date.formatted(.dateTime.weekday()))
                             .font(.title3)
                             .minimumScaleFactor(0.6)
                     }
